@@ -1,13 +1,14 @@
-let isValid = require("./sudokuUtil").isValid;
+let SudokuUtil = require("./sudokuUtil").SudokuUtil;
 
 class Solver {
     constructor(board){
         this.board = board
+        this.util = new SudokuUtil()
     }
 
     solvePuzzle(){
         if(this.solve(0, 0)){
-            this.showSolution()
+            this.util.showBoard(this.board)
         } else {
             console.log("Solution not possible")
         }
@@ -31,7 +32,7 @@ class Solver {
         for(let val = 1; val <= 9; val ++){
             // if the value is valid, set the space to be the value and 
             // check the next values
-            if(isValid(i, j, val, this.board)){
+            if(this.util.isValid(i, j, val, this.board)){
 
                 this.board[i][j] = val
 
@@ -46,37 +47,6 @@ class Solver {
 
         return false
     }
-
-    showSolution() {
-        for (let i = 0; i < this.board.length; i++) {
-            console.log(this.board[i])
-        }
-    }
 }
 
-let board = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9],
-]
-
-let board2 = [
-  [0, 0, 1, 5, 0, 0, 0, 7, 0],
-  [0, 0, 4, 0, 6, 0, 0, 0, 9],
-  [0, 3, 0, 0, 0, 4, 0, 0, 0],
-  [6, 2, 0, 0, 0, 5, 1, 0, 0],
-  [0, 4, 0, 0, 0, 0, 5, 2, 0],
-  [0, 0, 0, 0, 4, 8, 0, 0, 3],
-  [4, 1, 0, 0, 7, 0, 0, 0, 0],
-  [0, 0, 6, 8, 0, 0, 0, 0, 1],
-  [8, 0, 0, 0, 0, 9, 0, 3, 0],
-]
-
-let solver = new Solver(board2)
-solver.solvePuzzle()
+module.exports.Solver = Solver;
